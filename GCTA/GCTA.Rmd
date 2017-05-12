@@ -57,12 +57,12 @@ class: middle
 ### $$y = Xb + g + \epsilon \\ with \\ var(y)=V=A\sigma_G^2+I\sigma_e^2 \;\;(2)$$
 
 - $g$ is a $n \times 1$ vector of the total additive genetic effects of the individuals with $g\sim N(0, A\sigma_G^2)$
-- $A=$ **genetic relationship matrix (GRM)** between individuals with the $kj$th element being $A_{kj}=\frac{1}{N}\sum_{i-1}^N\frac{(x_{ij}-2p_i)(x_ik-2p_i)}{2p_i(1-p_i)}$
+- $A=$ **genetic relationship matrix (GRM)** between individuals with the $kj$th element being $A_{kj}=\frac{1}{N}\sum_{i-1}^N\frac{(x_{ij}-2p_i)(x_{ik}-2p_i)}{2p_i(1-p_i)}$
 - $\sigma_G^2$ and $\sigma_e^2$ can be estimated by restricted maximum likelihood (REML) approach.
 
 
 ---
-## $h_{SNP}^2$
+### $h_{SNP}^2$
 
 - **Define** $h_{SNP}^2=\frac{\sigma_G^2}{(\sigma_G^2+\sigma_e^2)}$ as the **proportion of phenotypic variance explained by all the SNPs**;
 - $h_{SNP}^2$ is **directly comparable** to the results from GWAS analyses.
@@ -105,3 +105,17 @@ class: middle
 
 ---
 * Step 2: estimate the variance explained by all SNPs by a Restricted Maximum Likelihood (REML) analysis of the phenotypes with the GRM.
+
+
+---
+## Extension: Genetic correlation between two traits
+
+> Comparing the phenotypic similarity and the genetic similarity between individuals **within** and **cross** two traits.
+
+
+$$cov(y_{i1},y_{k1})=A_{ik}\sigma_{g1}^2\\var(y_{i1})=A_{ii}\sigma_{g1}^2+\sigma_{e1}^2$$
+$$cov(y_{i2},y_{k2})=A_{ik}\sigma_{g2}^2\\var(y_{i2})=A_{ii}\sigma_{g2}^2+\sigma_{e2}^2$$
+$$cov(y_{i1},y_{k2})=A_{ik}\sigma_{g1g2}\\cov(y_{i1},y_{i2})=A_{ii}\sigma_{g1g2}+\sigma_{e1e2}$$
+
+"1" = trait 1, "2" = trait 2; $\sigma_{g1g2} =$ genetic covariance; $\sigma_{e1e2}=$ environmental covariance<br>
+$${\bf Genetic\;correlation}\rightarrow r_g=\frac{\sigma_{g1g2}}{\sigma_{g1}\sigma_{g2}}$$
