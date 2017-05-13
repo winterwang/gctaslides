@@ -80,3 +80,8 @@ blockquote {
   border-left: solid 5px lightgray;
   padding-left: 1em;
 }
+
+.title-slide {
+  background-image: url(fig/dna.jpg);
+  background-size: cover;
+}

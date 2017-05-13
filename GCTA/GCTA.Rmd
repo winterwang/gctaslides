@@ -13,10 +13,82 @@ output:
       countIncrementalSlides: false
 ---
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-```
+class: center, middle
 
+# BACKGROUND
+
+---
+class: center, middle
+
+.pull-left[
+**Mendelian Traits**<br>_Sickle-cell disease_(鎌状赤血球病)
+![Mendelian traits](fig/Autorecessive.svg)
+]
+
+.pull-right[
+**Complex traits**<br>
+_Human height_(身長)
+![tall+with+short](fig/tall+with+short_XvWsvmY367UKQ.gif)
+<br>
+_Schizophrenia_(統合失調症)
+![schizophrenia](fig/schizophrenia_13xK2EOraYiGvC.gif)
+
+]
+
+---
+# Major Questions
+<br>
+
+- ### **Are these traits heritable ?**
+
+- ### **If so, what is the heritability ?**
+
+- ### **How many genes involved and where are they located ?**
+
+---
+## Complex traits such as height, BMI and SCZ are highly heritable
+
+_according to twins studies._
+
+- ### Human Height : $\sim 80\%$
+
+- ### Body mass index : $40\% \sim 60\%$
+
+- ### Schizophrenia : $\sim 80\%$
+
+---
+class: inverse, middle, center
+background-image: url(fig/missingheri.png)
+background-size: contain
+
+---
+## The missing heritability problem
+
+.pull-left[
+#### Height:
+- 180 loci
+- $\sim$ 180K samples
+- $<$ 10 $\%$ of variance explained
+- heritablity = $\sim$ 80 $\%$
+
+#### BMI:
+- 32 loci
+- $\sim$ 250K samples
+- $\sim$ 1 $\%$ of variance explained
+]
+
+.pull-right[
+#### Schizophrenia
+- 22 loci
+- $\sim$ 21K cases/ $\sim$ 38K controls
+- $<$ 3 $\%$ of variance explained
+
+#### Possible reasons:
+- Effect sizes at individual SNPs are **too small to reach** $5 \times 10^{-8}$
+- Causal variants are **not in sufficient LD** with SNPs on the commercial arrays to be detected.
+]
+
+---
 ## Estimating the Variance Explained by Genome-Wide SNPs
 
 ### Basic concept:
