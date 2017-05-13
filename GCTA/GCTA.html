@@ -4,6 +4,12 @@
     <title>GCTA</title>
     <meta charset="utf-8">
     <meta name="author" content="王　超辰" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/jquery/jquery.min.js"></script>
+    <script src="libs/datatables-binding/datatables.js"></script>
+    <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="zh-CN.css" type="text/css" />
   </head>
   <body>
@@ -16,6 +22,8 @@ class: center, middle, inverse, title-slide
 ### 2017/5/16
 
 ---
+
+
 
 
 class: center, middle
@@ -61,10 +69,6 @@ _according to twins studies._
 
 - ### Schizophrenia : `\(\sim 80\%\)`
 
----
-class: inverse, middle, center
-background-image: url(fig/missingheri.png)
-background-size: contain
 
 ---
 ## The missing heritability problem
@@ -94,6 +98,11 @@ background-size: contain
 ]
 
 ---
+class: inverse, middle, center
+background-image: url(fig/missingheri.png)
+background-size: contain
+
+---
 ## Estimating the Variance Explained by Genome-Wide SNPs
 
 ### Basic concept:
@@ -101,7 +110,10 @@ background-size: contain
 
 - To estimate **the variance explained by all the SNPs** without testing for associations of any individual SNP with the trait.
 
+---
+class: inverse, center, middle
 
+# GCTA models
 
 
 ---
@@ -159,9 +171,9 @@ class: middle
 
 ---
 
-## [GCTA applications:](http://cnsgenomics.com/software/gcta/index.html)
+## [GCTA applications: (1)](http://cnsgenomics.com/software/gcta/index.html)
 
-* Step 1: generating **genetic relationship matrix (GRM)**&lt;br&gt;
+* #### Step 1: generating **genetic relationship matrix (GRM)**&lt;br&gt;
 
     + a GWAS dataset in PLINK binary PED format (`test.bed; test.bim; test.fam`)
     + _Command 1_:
@@ -181,8 +193,75 @@ class: middle
 ```
 
 ---
-* Step 2: estimate the variance explained by all SNPs by a Restricted Maximum Likelihood (REML) analysis of the phenotypes with the GRM.
+## [GCTA applications: (2)](http://cnsgenomics.com/software/gcta/index.html)
 
+* #### Step 2: estimate the variance explained by all SNPs by a Restricted Maximum Likelihood (REML) analysis of the phenotypes with the GRM.
+
+    + _Command 4_:
+```yaml
+./gcta64 --grm test --pheno test.phen --reml --out test
+```
+
+`sleep.phen:`
+<div id="htmlwidget-2613885c76704ca4bff5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2613885c76704ca4bff5">{"x":{"filter":"none","fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],["jmicc000001","jmicc000002","jmicc000003","jmicc000004","jmicc000005","jmicc000006","jmicc000007","jmicc000008","jmicc000009","jmicc000010"],["jmicc000001","jmicc000002","jmicc000003","jmicc000004","jmicc000005","jmicc000006","jmicc000007","jmicc000008","jmicc000009","jmicc000010"],["6.5","8","5","6","6.5","6","6.5","8","7","6.5"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>ID.1<\/th>\n      <th>SleepTime<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[3,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+```yaml
+./gcta64 --reml --grm-bin JMICC --pheno sleep.phen --out sleep
+ ******************************************************************
+ Genome-wide Complex Trait Analysis (GCTA)
+ version 1.26.0
+ (C) 2010-2016, The University of Queensland
+ MIT License
+ Please report bugs to: Jian Yang &lt;jian.yang@uq.edu.au&gt;
+ *******************************************************************
+Analysis started: Sat May 13 17:50:51 2017
+
+Options:
+--reml
+--grm-bin JMICC
+--pheno sleep.phen
+--out sleep
+
+Note: This is a multi-thread program. You could specify the number of
+threads by the --thread-num option to speed up the computation if
+there are multiple processors in your machine.
+
+Reading IDs of the GRM from [JMICC.grm.id].
+14088 IDs read from [JMICC.grm.id].
+Reading the GRM from [JMICC.grm.bin].
+GRM for 14088 individuals are included from [JMICC.grm.bin].
+Reading phenotypes from [sleep.phen].
+Non-missing phenotypes of 9676 individuals are included from [sleep.phen].
+```
+
+---
+background-image: url(fig/calculation.jpg)
+background-size: contain
+
+---
+background-image: url(fig/memory.jpg)
+background-size: contain
+
+---
+class: middle
+### Common SNPs explain 23% of the heritability for sleep duration in JMICC study participants
+
+```yaml
+Summary Result of REML analysis:
+Source	  Variance   	SE
+V(G)	    86.516241	 12.555365
+V(e)	    288.099351	12.738188
+Vp	      374.615592	5.506539
+*V(G)/Vp	 0.230947	  0.033053
+LogL	    -32278.958
+LRT     	62.124
+df 	     1
+Pval    	1.61e-15
+n	       9326
+```
 
 ---
 ## Extension: Genetic correlation between two traits
@@ -196,6 +275,81 @@ class: middle
 
 "1" = trait 1, "2" = trait 2; `\(\sigma_{g1g2} =\)` genetic covariance; `\(\sigma_{e1e2}=\)` environmental covariance&lt;br&gt;
 `$${\bf Genetic\;correlation}\rightarrow r_g=\frac{\sigma_{g1g2}}{\sigma_{g1}\sigma_{g2}}$$`
+
+
+---
+### **GCTA bivariate GREML analysis application**
+
+```yaml
+*./gcta64 --reml-bivar --grm JMICC --pheno sleepBMI.phen --out JMICCsleepBMI
+...
+Analysis started: Sun Apr 23 21:55:02 2017
+
+Options:
+--reml-bivar 1 2
+--grm JMICC
+--pheno sleepBMI.phen
+--out JMICCsleepBMI
+
+Reading IDs of the GRM from [JMICC.grm.id].
+14088 IDs read from [JMICC.grm.id].
+Reading the GRM from [JMICC.grm.bin].
+GRM for 14088 individuals are included from [JMICC.grm.bin].
+Reading phenotypes from [sleepBMI.phen].
+There are 2 traits specified in the file [sleepBMI.phen].
+Traits 1 and 2 are included in the bivariate analysis.
+Non-missing phenotypes of 14555 individuals are included from [sleepBMI.phen].
+13631 individuals are in common in these files.
+13617 non-missing phenotypes for trait 1 and 13619 for trait 2
+```
+
+---
+class: middle
+### The genetic correlation association between BMI and sleep duration
+
+```yaml
+Summary result of REML analysis:
+Source	Variance	SE
+V(G)_tr1	5.886921	0.261958
+V(G)_tr2	0.348178	0.023045
+C(G)_tr12	0.041237	0.062379
+V(e)_tr1	4.588593	0.212535
+V(e)_tr2	0.662649	0.021347
+C(e)_tr12	-0.028576	0.053324
+Vp_tr1	10.475513	0.133431
+Vp_tr2	1.010827	0.012377
+V(G)/Vp_tr1	0.561970	0.021571
+V(G)/Vp_tr2	0.344449	0.021459
+*rG	0.028803	0.043606
+```
+
+---
+### rG summary
+<div id="htmlwidget-ae5b26f0ebfd18b873ac" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ae5b26f0ebfd18b873ac">{"x":{"filter":"none","fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10"],["BMI","DM (case-control) pre=0.59","CRP","Alcohol intake (now)","Drink-year","HbA1c-log","stress","tobacco","Pack-year","Fasting blood sugar-log"],[0.03,0.11,-0.14,0.22,0.23,0.01,-0.17,0.003,-0.2,0.28],[0.04,0.06,0.21,0.1,0.1,0.12,0.05,0.09,0.23,0.17],[-0.06,-0.01,-0.55,0.02,0.02,-0.24,-0.28,-0.17,-0.64,-0.05],[0.11,0.22,0.26,0.42,0.43,0.25,-0.06,0.18,0.24,0.61],[-0.005,0.042,0.031,0.099,0.124,0.002,-0.183,0.026,0.099,0.051],[-0.021,0.138,-0.008,0.077,0.107,-0.02,0.046,0.01,0.082,0.016],[0.012,0.076,0.07,0.121,0.141,0.023,-0.162,0.042,0.115,0.087]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Trait<\/th>\n      <th>rG<\/th>\n      <th>SE<\/th>\n      <th>CI.low<\/th>\n      <th>CI.high<\/th>\n      <th>r<\/th>\n      <th>CI.low.1<\/th>\n      <th>CI.high.1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+
+---
+class: middle
+### Correlation between two variables (both genetic and phenotypic correlation) in JMICC study
+&lt;br&gt;
+upper right: rG; &lt;br&gt;
+lower left: r
+
+| traits        |         Alcohol          |          Stress          |        Education        |           SBP           |
+|:-------------|:------------------------:|:------------------------:|:-----------------------:|:-----------------------:|
+| **Alchol**    |            －            | -0.13&lt;br&gt; (-0.32, 0.07)  | -0.11&lt;br&gt; (-0.28, 0.06) |  **0.27&lt;br&gt; (0.12, 0.43)**  |
+| **Stress**    | -0.06 &lt;br&gt;(-0.08, -0.03) |            －            |  **0.42&lt;br&gt; (0.14, 0.71)**  | -0.23&lt;br&gt; (-0.48, 0.02) |
+| **Education** |  0.10&lt;br&gt; (0.07, 0.12)   |  0.03&lt;br&gt; (0.00, 0.07)   |           －            | -0.13 &lt;br&gt;(-0.32, 0.07) |
+| **SBP**       |  0.19&lt;br&gt; (0.17, 0.21)   | -0.14&lt;br&gt; (-0.17, -0.11) | -0.02&lt;br&gt; (-0.06, 0.01) |           －            |
+
+
+
+
+---
+
+class: center, middle
+
+# Thanks!
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

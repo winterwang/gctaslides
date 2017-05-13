@@ -1,0 +1,11 @@
+Summary Result of REML analysis:,,
+Source,Variance,SE
+V(G),86.516241,12.555365
+V(e),288.099351,12.738188
+Vp,374.615592,5.506539
+V(G)/Vp,0.230947,0.033053
+LogL,-32278.958,
+LRT,62.124,
+df ,1,
+Pval,1.61E-15,
+n,9326,
